@@ -1,0 +1,8 @@
+numpy 
+pandas
+flask
+pyYAML
+dill 
+scikit-learn
+imblearn
+-e .
