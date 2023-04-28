@@ -1,4 +1,4 @@
-FileName: "Visadataset[1].csv"
+FileName: "Visadataset.csv"
 NumberofColumns: 11
 ColumnNames:
   continent: category
@@ -32,4 +32,3 @@ Transformation_columns:
   - company_age
 
 target_column: case_status
-
