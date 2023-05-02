@@ -95,3 +95,4 @@ class DataIngestion:
             return self.split_data_as_train_test()
         except Exception as e:
             raise CustomException(e, sys)from e
+        
