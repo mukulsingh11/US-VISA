@@ -13,38 +13,38 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OrdinalEncoder, OneHotEncoder, PowerTransformer
 from imblearn.combine import SMOTEENN
 
-
 class DataTransformation:
 
-    def __init__(self,data_transformation_config: DataTransformationConfig,
-                data_ingestion_artifact: DataIngestionArtifact,
-                data_validation_artifact: DataValidationArtifact):
-        
+    def __init__(self, data_transformation_config: DataTransformationConfig,
+                 data_ingestion_artifact: DataIngestionArtifact,
+                 data_validation_artifact: DataValidationArtifact
+                 ):
         try:
-            logging.info(f'{">>" * 10} Data Transforamtion log started {"<<" * 10}')
+            logging.info(f"{'>>' * 30}Data Transformation log started.{'<<' * 30}")
             self.data_transformation_config = data_transformation_config
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_artifact = data_validation_artifact
-        except Exception as e:
-            raise CustomException(e,sys) from e
-        
-    def get_data_transformer_object(self) -> ColumnTransformer:
 
+        except Exception as e:
+            raise CustomException(e, sys) from e
+
+    def get_data_transformer_object(self) -> ColumnTransformer:
         try:
             schema_file_path = self.data_validation_artifact.schema_file_path
+            
+            dataset_schema = read_yaml_file(file_path=schema_file_path)
 
-            dataset_schema = read_yaml_file(file_path = schema_file_path)
-
-            numerical_columns = dataset_schema[TARGET_COLUMN_KEY]
+            numerical_columns = dataset_schema[NUMERICAL_COLUMN_KEY]
             ordinal_columns = dataset_schema[ORDINAL_COLUMN_KEY]
             onehot_columns = dataset_schema[ONE_HOT_COLUMN_KEY]
             transform_columns = dataset_schema[TRANSFORM_COLUMN_KEY]
 
             num_pipeline = Pipeline(steps=[
-                ('imputer' , SimpleImputer(strategy='median')),
-                ('scaler',StandardScaler())
-            ])
-
+                ('imputer', SimpleImputer(strategy='median')),
+                ('scaler', StandardScaler())
+            ]
+            )
+            
             onehot_pipeline= Pipeline(steps=[
                 ('imputer', SimpleImputer(strategy='most_frequent')),
                 ('oridnal_encoder', OrdinalEncoder()),
@@ -178,9 +178,4 @@ class DataTransformation:
             raise CustomException(e, sys) from e
 
     def __del__(self):
-        logging.info(f"{'>>' * 10}Data Transformation log completed.{'<<' * 10} \n\n")
-
-
-
-
- 
+        logging.info(f"{'>>' * 30}Data Transformation log completed.{'<<' * 30} \n\n")

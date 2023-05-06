@@ -16,7 +16,7 @@ class DataIngestion:
 
     def __init__(self, data_ingestion_config: DataIngestionConfig):
         try:
-            logging.info(f"{'>>' * 20} data ingestion log started  {'<<' * 20}\n\n")
+            logging.info(f"{'>>' * 20} Data Ingestion   {'<<' * 20}\n\n")
             self.data_ingestion_config = data_ingestion_config
         except Exception as e:
             raise CustomException(e,sys) from e
